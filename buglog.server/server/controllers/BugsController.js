@@ -1,6 +1,7 @@
 import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { bugsService } from '../services/BugsService'
+import { notesService } from '../services/NotesService'
 
 export class BugsController extends BaseController {
   constructor() {
@@ -8,11 +9,14 @@ export class BugsController extends BaseController {
     this.router
       .get('', this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
+      .get('/:id/notes', this.findNotes)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('/:id', this.getOne)
       .post('', this.createBug)
       .delete('/:id', this.deleteBug)
       .put('/:id', this.editBug)
+    // NOTE these are calling the lists service
+    // .post('/:id/notes', this.createNote)
   }
 
   async getAll(req, res, next) {
@@ -58,6 +62,25 @@ export class BugsController extends BaseController {
       req.query.creatorId = req.userInfo.id
       const bug = await bugsService.editBug(req.params.id, req.body)
       res.send(bug)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  // async createNote(req, res, next) {
+  //   try {
+  //     // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
+  //     req.body.creatorId = req.userInfo.id
+  //     const note = await notesService.createNote(req.body)
+  //     res.status(201).send(note)
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  // }
+
+  async findNotes(req, res, next) {
+    try {
+      res.send(await notesService.find({ bug: req.params.id }))
     } catch (error) {
       next(error)
     }
