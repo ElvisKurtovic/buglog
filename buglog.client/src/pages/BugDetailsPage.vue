@@ -1,12 +1,15 @@
 <template>
   <div class="BugDetailsPage">
     <h1>This is the details page</h1>
-    <div class="col-4 card mt-1">
+    <div class="col card mt-1">
       <div class="card-body">
         <h4 class="card-title">
           {{ state.bug.title }}
         </h4>
         <p>{{ state.bug.description }}</p>
+        <p>{{ state.bug.creator.email }}</p>
+        <p><img src="https://s.gravatar.com/avatar/0db53901eca1472a8997a38a24b38d06?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fte.png" alt=""></p>
+        <br>
         <p>{{ state.bug.closed }}</p>
       </div>
 
