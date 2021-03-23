@@ -8,7 +8,7 @@
     </button>
     <div class="row text-center">
       <div class="col" v-if="state.user.isAuthenticated">
-        <form class="form-inline" @submit.prevent="createBug">
+        <form class="form-inline mt-1" @submit.prevent="createBug">
           <div class="form-group">
             <input
               type="text"

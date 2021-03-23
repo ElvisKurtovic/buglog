@@ -2,11 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img
+        <!-- <img
           alt="logo"
           src="../assets/img/cw-logo.png"
           height="45"
-        />
+        /> -->
       </div>
     </router-link>
     <button
@@ -24,15 +24,19 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
+            <span class="text-light"> Home </span>
           </router-link>
         </li>
+
         <!-- <li class="nav-item">
           <router-link :to="{ name: 'BugDetailsPage' }" class="nav-link">
             BugDetailsPage
           </router-link>
         </li> -->
       </ul>
+      <h3 class="text-center mx-auto mr-5 text-light">
+        bugLog<span class="pcolor">()</span>
+      </h3>
       <span class="navbar-text">
         <button
           class="btn btn-outline-primary text-uppercase"
@@ -103,6 +107,9 @@ export default {
 </script>
 
 <style scoped>
+.pcolor{
+  color: yellow;
+}
 .dropdown-menu {
   user-select: none;
   display: block;

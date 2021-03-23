@@ -2,7 +2,7 @@
   <header>
     <Navbar />
   </header>
-  <main>
+  <main class="bugimg">
     <vue-confirm-dialog></vue-confirm-dialog>
     <router-view />
   </main>
@@ -37,5 +37,17 @@ export default {
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
+
+.bugimg{
+  background-image: url(https://www.biographic.com/wp-content/uploads/2019/09/home-of-a-moth-caterpillar.jpg);
+  // background-size: 100vh;
+  // background-repeat: no-repeat;
+  // background-size: contain;
+  // height: 100%;
+  // height: 100%;
+  // background-position: center;
+  // background-repeat: no-repeat;
+  background-size: contain;
+}
 
 </style>

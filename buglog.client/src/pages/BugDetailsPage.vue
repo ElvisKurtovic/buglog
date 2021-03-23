@@ -1,12 +1,13 @@
 <template>
   <div class="BugDetailsPage">
-    <div class="col card mt-1">
+    <div class="bug col card mt-1">
       <div class="card-body">
         <h4 class="card-title">
           {{ state.bug.title }}
         </h4>
         <p>{{ state.bug.description }}</p>
         <p>Updated On: {{ Date(state.bug.updatedAt) }}</p>
+        <p>Updated On: {{ state.bug.updatedAt.split('T')[0] }}</p>
         <p v-if="state.bug.creator">
           -{{ state.bug.creator.email }}
         </p>
@@ -24,7 +25,7 @@
         <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBug"></i>
       </div>
     </div>
-    <Note v-for="noteData in state.notes" :key="noteData.id" :note="noteData">
+    <Note class="bug" v-for="noteData in state.notes" :key="noteData.id" :note="noteData">
     </note>
     <form class="form-inline mt-1" @submit.prevent="createNote">
       <div class="form-group">
@@ -103,6 +104,15 @@ export default {
 </script>
 
     <style lang="scss" scoped>
+    .bug:hover {
+  // transform: translateY(-5px);
+  box-shadow: 1px 3px 5px rgb(94, 94, 94);
+  // cursor: pointer
+}
+.bug {
+  transition: all .2s;
+  color: black
+}
     .btncolor{
       background-color: magenta;
     }
