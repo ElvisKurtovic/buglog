@@ -6,11 +6,16 @@
           {{ bug.title }}
         </h4>
         <p>{{ bug.description }}</p>
-        <p>{{ bug.closed }}</p>
+        <p v-if="bug.closed == true" class="text-danger">
+          CLOSED
+        </p>
+        <p v-if="bug.closed == false" class="text-success">
+          OPEN
+        </p>
       </div>
     </router-link>
     <div class="z-2">
-      <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBug"></i>
+      <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBug">Click Trash Can To Mark As Closed</i>
     </div>
   </div>
 </template>
@@ -33,8 +38,10 @@ export default {
     return {
       state,
       async deleteBug() {
-        await bugsService.deleteBug(props.bug.id)
-        await bugsService.getBugs(route.params.id)
+        if (window.confirm('You sure bro?')) {
+          await bugsService.deleteBug(props.bug.id)
+          await bugsService.getBugs(route.params.id)
+        }
       }
     }
   },

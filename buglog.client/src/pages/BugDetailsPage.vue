@@ -1,16 +1,23 @@
 <template>
   <div class="BugDetailsPage">
-    <h1>This is the details page</h1>
     <div class="col card mt-1">
       <div class="card-body">
         <h4 class="card-title">
           {{ state.bug.title }}
         </h4>
         <p>{{ state.bug.description }}</p>
-        <p>{{ state.bug.creator.email }}</p>
+        <p>Updated On: {{ Date(state.bug.updatedAt) }}</p>
+        <p v-if="state.bug.creator">
+          -{{ state.bug.creator.email }}
+        </p>
         <p><img src="https://s.gravatar.com/avatar/0db53901eca1472a8997a38a24b38d06?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fte.png" alt=""></p>
         <br>
-        <p>{{ state.bug.closed }}</p>
+        <p v-if="state.bug.closed == true" class="text-danger">
+          CLOSED
+        </p>
+        <p v-if="state.bug.closed == false" class="text-success">
+          OPEN
+        </p>
       </div>
 
       <div class="z-2">
@@ -44,10 +51,18 @@ import { reactive, computed, onMounted } from 'vue'
 import { AppState } from '../AppState'
 import { useRoute } from 'vue-router'
 import { bugsService } from '../services/BugsService'
+
+// import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse'
+
 // import { listsService } from '../services/ListsService'
 export default {
   name: 'BugDetailsPage',
+
+  props: {
+    bug: { type: Object, required: true }
+  },
   setup() {
+    // Vue.use(VueFilterDateParse)
     const route = useRoute()
     // const router = useRouter()
     const state = reactive({
@@ -67,7 +82,10 @@ export default {
       state,
       route,
       async deleteBug() {
-        await bugsService.deleteBug(state.bug.id)
+        if (window.confirm('You sure bro?')) {
+          await bugsService.deleteBug(state.bug.id)
+          state.activeBug = {}
+        }
       },
       async createNote() {
         await bugsService.createNote({ bug: state.bug.id, body: state.newNote.body })

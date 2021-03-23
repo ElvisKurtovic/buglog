@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <button class="btn btn-success" @click="sortBugs">
+      Filter By Open Bugs
+    </button>
+    <button class="btn btn-danger" @click="sortBugz">
+      Filter By Closed Bugs
+    </button>
     <div class="row text-center">
       <div class="col" v-if="state.user.isAuthenticated">
         <form class="form-inline" @submit.prevent="createBug">
@@ -49,12 +55,20 @@ import { reactive, computed } from 'vue'
 import { bugsService } from '../services/BugsService'
 // import { useRouter } from 'vue-router'
 import { onMounted } from '@vue/runtime-core'
+import { useRouter } from 'vue-router'
+import { logger } from '../utils/Logger'
 export default {
   name: 'Home',
+  props: {
+    bug: { type: Object, required: true }
+  },
   setup() {
+    const router = useRouter()
     const state = reactive({
       bugs: computed(() => AppState.bugs),
       user: computed(() => AppState.user),
+      sortedBugs: computed(() => AppState.bugs.filter(bug => bug.closed === false)),
+      sortedBugz: computed(() => AppState.bugs.filter(bug => bug.closed === true)),
       newBug: {}
     })
     onMounted(() => {
@@ -62,9 +76,23 @@ export default {
     })
     return {
       state,
+      sortBugz() {
+        AppState.bugs = state.sortedBugz
+      },
+      sortBugs() {
+        AppState.bugs = state.sortedBugs
+      },
       async createBug() {
-        await bugsService.createBug(state.newBug)
-        state.newBug = {}
+        try {
+          state.newBug.creator = state.user
+          state.newBug.creatorId = state.user.id
+          const bugId = await bugsService.createBug(state.newBug)
+          // state.activeBug.user = state.user
+          router.push({ name: 'BugDetailsPage', params: { id: bugId } })
+          state.newBug = {}
+        } catch (error) {
+          logger.log(error)
+        }
       }
     }
   }

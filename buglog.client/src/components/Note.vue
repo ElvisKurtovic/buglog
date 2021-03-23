@@ -27,8 +27,10 @@ export default {
     return {
       state,
       async deleteNote() {
-        await bugsService.deleteNote(props.note.id, props.note.bug)
-        await bugsService.getNotes(route.params.id)
+        if (window.confirm('You sure bro?')) {
+          await bugsService.deleteNote(props.note.id, props.note.bug)
+          await bugsService.getNotes(route.params.id)
+        }
       }
     }
   },

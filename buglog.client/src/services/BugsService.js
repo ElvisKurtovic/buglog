@@ -43,8 +43,10 @@ class BugsService {
 
   async createBug(rawBug) {
     try {
-      await api.post('api/bugs', rawBug)
-      this.getBugs()
+      const res = await api.post('api/bugs', rawBug)
+      // this.getBugs()
+      AppState.bugs.push(res.data)
+      return res.data.id
     } catch (error) {
       console.error(error)
     }
