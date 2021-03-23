@@ -15,7 +15,8 @@
       </div>
     </router-link>
     <div class="z-2">
-      <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBug">Click Trash Can To Mark As Closed</i>
+      Click Trash Can To Mark As Closed
+      <i class="fas fa-trash float-right text-danger" aria-hidden="true" @click="deleteBug"></i>
     </div>
   </div>
 </template>

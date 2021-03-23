@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <button class="btn btn-success" @click="sortBugs">
+    <button class="btn btn-success mx-auto" @click="sortBugs">
       Filter By Open Bugs
     </button>
-    <button class="btn btn-danger" @click="sortBugz">
+    <button class="btn btn-danger ml-1" @click="sortBugz">
       Filter By Closed Bugs
     </button>
     <div class="row text-center">

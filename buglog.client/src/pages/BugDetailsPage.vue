@@ -26,7 +26,7 @@
     </div>
     <Note v-for="noteData in state.notes" :key="noteData.id" :note="noteData">
     </note>
-    <form class="form-inline" @submit.prevent="createNote">
+    <form class="form-inline mt-1" @submit.prevent="createNote">
       <div class="form-group">
         <input
           type="text"
